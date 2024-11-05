@@ -1,39 +1,32 @@
-name: CI Pipeline
+name: Python Tests
 
 on:
   push:
     branches:
       - main
-      - feature/* 
+      - feature/*
   pull_request:
     branches:
       - main
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
-    
+
     steps:
-      - name: Checkout code
+      - name: Check out code
         uses: actions/checkout@v2
-      
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
         with:
-          node-version: '14'
-      
+          python-version: '3.9'  
+
       - name: Install dependencies
-        run: npm install
-      
-      - name: Run tests
-        run: npm test
-      
-  deploy:
-    runs-on: ubuntu-latest
-    needs: build
-    if: github.ref == 'refs/heads/main'
-    
-    steps:
-      - name: Deploy to Production
         run: |
-          echo "${{ vars.TEST_VARIABLE }}"
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt  
+
+      - name: Run tests
+        run: |
+          pytest /mnt/data/test_scientific_calculator.py  
