@@ -1,7 +1,8 @@
 import math
 
 class ScientificCalculator:
-        def sin(self, x):
+
+    def sin(self, x):
         if not isinstance(x, (int, float)):
             raise TypeError("Input must be a number")
         return math.sin(math.radians(x))
@@ -34,4 +35,3 @@ class ScientificCalculator:
         if not isinstance(x, (int, float)):
             raise TypeError("Input must be a number")
         return math.exp(x)
-
